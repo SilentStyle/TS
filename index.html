@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riad Gold - Premium Soccer Complex</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gold': '#B8860B',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .hero-section {
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.65);
+        }
+
+        .category-pill {
+            display: inline-block;
+            padding: 10px 24px;
+            background: white;
+            color: #000;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .category-pill:hover {
+            background: #B8860B;
+            color: white;
+            border-color: #B8860B;
+        }
+
+        .huge-title {
+            font-size: clamp(3.5rem, 12vw, 9rem);
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 7vw, 6rem);
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+        }
+
+        .activity-card {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+
+        .activity-card:hover {
+            transform: scale(0.97);
+        }
+
+        .activity-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .activity-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .activity-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 50px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+            color: white;
+        }
+
+        .btn-primary {
+            background: #000;
+            color: white;
+            padding: 20px 60px;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #B8860B;
+            transform: translateY(-2px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 80px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 5rem;
+            font-weight: 900;
+            color: #B8860B;
+            line-height: 1;
+        }
+
+        .nav-link {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #B8860B;
+        }
+
+        @media (max-width: 768px) {
+            .category-pill {
+                font-size: 9px;
+                padding: 8px 16px;
+            }
+
+            .stats-grid {
+                gap: 50px;
+            }
+
+            .stat-number {
+                font-size: 3.5rem;
+            }
+
+            .activity-card {
+                height: 350px;
+            }
+
+            .activity-overlay {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Minimal Header -->
+    <header class="fixed top-0 w-full z-50 bg-white/98 backdrop-blur-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+            <a href="/" class="text-2xl font-black tracking-tight">RIAD GOLD</a>
+
+            <nav class="hidden md:flex items-center space-x-12">
+                <a href="#activities" class="nav-link">Activities</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <a href="booking.html" class="btn-primary text-sm py-3 px-8">Book Now</a>
+            </nav>
+
+            <button class="md:hidden text-2xl" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-6 py-6 space-y-6">
+                <a href="#activities" class="block nav-link text-lg">Activities</a>
+                <a href="#about" class="block nav-link text-lg">About</a>
+                <a href="#pricing" class="block nav-link text-lg">Pricing</a>
+                <a href="#contact" class="block nav-link text-lg">Contact</a>
+                <a href="booking.html" class="btn-primary w-full text-center mt-4">Book Now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <img src="pics/h7kgysiymuicj6vxwjay.webp" alt="Soccer Field" class="hero-image">
+        <div class="absolute inset-0 flex items-center z-10">
+            <div class="max-w-7xl mx-auto px-6 w-full">
+                <div class="max-w-5xl">
+                    <h1 class="huge-title text-white mb-10">
+                        PLAY.<br>
+                        COMPETE.<br>
+                        WIN.
+                    </h1>
+                    <div class="flex flex-wrap gap-2 mb-14">
+                        <span class="category-pill">5V5 SOCCER</span>
+                        <span class="category-pill">11V11 FULL FIELD</span>
+                        <span class="category-pill">TOURNAMENTS</span>
+                        <span class="category-pill">TEAM EVENTS</span>
+                        <span class="category-pill">TRAINING</span>
+                        <span class="category-pill">COACHING</span>
+                    </div>
+                    <a href="booking.html" class="btn-primary">
+                        Book Your Match
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 text-white z-10">
+            <div class="animate-bounce">
+                <i class="fas fa-chevron-down text-3xl"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Section -->
+    <section id="activities" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="section-title mb-20">What We Offer</h2>
+
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div class="activity-card">
+                    <img src="pics/h7kgysiymuicj6vxwjay.webp" alt="5v5 Soccer">
+                    <div class="activity-overlay">
+                        <h3 class="text-5xl font-black mb-3">5V5 SOCCER</h3>
+                        <p class="text-gray-300 text-lg">Fast-paced matches on premium turf</p>
+                    </div>
+                </div>
+                <div class="activity-card">
+                    <img src="pics/dzkmwm8nvycjutw6qmzk.webp" alt="11v11 Soccer">
+                    <div class="activity-overlay">
+                        <h3 class="text-5xl font-black mb-3">11V11 FULL FIELD</h3>
+                        <p class="text-gray-300 text-lg">Professional regulation-size pitches</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="activity-card">
+                    <img src="pics/bxn9guoo9m0lpgztiung.webp" alt="Tournaments">
+                    <div class="activity-overlay">
+                        <h3 class="text-4xl font-black mb-2">TOURNAMENTS</h3>
+                        <p class="text-gray-300">Organized competitions</p>
+                    </div>
+                </div>
+                <div class="activity-card">
+                    <img src="pics/h7kgysiymuicj6vxwjay.webp" alt="Team Events">
+                    <div class="activity-overlay">
+                        <h3 class="text-4xl font-black mb-2">TEAM EVENTS</h3>
+                        <p class="text-gray-300">Corporate & private bookings</p>
+                    </div>
+                </div>
+                <div class="activity-card">
+                    <img src="pics/dzkmwm8nvycjutw6qmzk.webp" alt="Training">
+                    <div class="activity-overlay">
+                        <h3 class="text-4xl font-black mb-2">TRAINING</h3>
+                        <p class="text-gray-300">Professional coaching available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-32 bg-black text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="stats-grid">
+                <div>
+                    <div class="stat-number">5K+</div>
+                    <p class="text-gray-400 font-semibold uppercase text-sm mt-4 tracking-wider">Happy Players</p>
+                </div>
+                <div>
+                    <div class="stat-number">3</div>
+                    <p class="text-gray-400 font-semibold uppercase text-sm mt-4 tracking-wider">Premium Fields</p>
+                </div>
+                <div>
+                    <div class="stat-number">24/7</div>
+                    <p class="text-gray-400 font-semibold uppercase text-sm mt-4 tracking-wider">Availability</p>
+                </div>
+                <div>
+                    <div class="stat-number">100%</div>
+                    <p class="text-gray-400 font-semibold uppercase text-sm mt-4 tracking-wider">Quality</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-24 items-center">
+                <div>
+                    <h2 class="section-title mb-10">About<br>Riad Gold</h2>
+                    <div class="space-y-6 text-xl text-gray-700 leading-relaxed">
+                        <p>
+                            Riad Gold is a premier soccer complex dedicated to providing world-class
+                            facilities for players of all levels.
+                        </p>
+                        <p>
+                            Our state-of-the-art fields and professional-grade amenities create the
+                            perfect environment for competitive play and skill development.
+                        </p>
+                        <p>
+                            Since 2018, we've been the destination for soccer enthusiasts.
+                        </p>
+                    </div>
+                    <a href="#contact" class="btn-primary mt-12">Get In Touch</a>
+                </div>
+                <div class="relative">
+                    <img src="pics/h7kgysiymuicj6vxwjay.webp" alt="Facility" class="w-full h-[700px] object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-32 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="section-title mb-20">Pricing</h2>
+
+            <div class="grid md:grid-cols-3 gap-0 border-2 border-black max-w-6xl">
+                <div class="bg-white p-12 border-r-2 border-black">
+                    <h3 class="text-3xl font-black mb-2 uppercase">Casual</h3>
+                    <div class="text-6xl font-black mb-10">€25<span class="text-xl text-gray-500">/hr</span></div>
+                    <ul class="space-y-5 mb-12 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-gold mt-1 mr-3 text-sm"></i>
+                            <span>1-hour slot</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-gold mt-1 mr-3 text-sm"></i>
+                            <span>Up to 14 players</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-gold mt-1 mr-3 text-sm"></i>
+                            <span>Basic amenities</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-gold mt-1 mr-3 text-sm"></i>
+                            <span>Free parking</span>
+                        </li>
+                    </ul>
+                    <a href="booking.html" class="btn-primary w-full text-center">Book Now</a>
+                </div>
+
+                <div class="bg-gold text-white p-12 border-r-2 border-black transform scale-105 z-10">
+                    <div class="text-xs font-black mb-4 uppercase tracking-wider">Most Popular</div>
+                    <h3 class="text-3xl font-black mb-2 uppercase">Team</h3>
+                    <div class="text-6xl font-black mb-10">€45<span class="text-xl opacity-75">/hr</span></div>
+                    <ul class="space-y-5 mb-12">
+                        <li class="flex items-start">
+                            <i class="fas fa-check mt-1 mr-3 text-sm"></i>
+                            <span>2-hour slot</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check mt-1 mr-3 text-sm"></i>
+                            <span>Up to 22 players</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check mt-1 mr-3 text-sm"></i>
+                            <span>Full amenities</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check mt-1 mr-3 text-sm"></i>
+                            <span>Equipment included</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check mt-1 mr-3 text-sm"></i>
+                            <span>Video recording</span>
+                        </li>
+                    </ul>
+                    <a href="booking.html" class="bg-black text-white btn-primary w-full text-center hover:bg-white hover:text-black">Book Now</a>
+                </div>
+
+                <div class="bg-white p-12">
+                    <h3 class="text-3xl font-black mb-2 uppercase">Tournament</h3>
+                    <div class="text-6xl font-black mb-10">€150<span class="text-xl text-gray-500">/day</span></div>
+                    <ul class="space-y-5 mb-12 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-gold mt-1 mr-3 text-sm"></i>
+                            <span>4-hour block</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-gold mt-1 mr-3 text-sm"></i>
+                            <span>Multiple teams</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-gold mt-1 mr-3 text-sm"></i>
+                            <span>Premium amenities</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-gold mt-1 mr-3 text-sm"></i>
+                            <span>Event coordination</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-gold mt-1 mr-3 text-sm"></i>
+                            <span>Custom branding</span>
+                        </li>
+                    </ul>
+                    <a href="booking.html" class="btn-primary w-full text-center">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 bg-black text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-24">
+                <div>
+                    <h2 class="section-title text-white mb-16">Get In Touch</h2>
+
+                    <div class="space-y-10">
+                        <div>
+                            <p class="text-gray-500 uppercase text-xs font-bold mb-3 tracking-widest">Location</p>
+                            <p class="text-2xl">123 Riad Street<br>Sports District<br>City, State 12345</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 uppercase text-xs font-bold mb-3 tracking-widest">Phone</p>
+                            <p class="text-2xl">+1 (234) 567-8900</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 uppercase text-xs font-bold mb-3 tracking-widest">Email</p>
+                            <p class="text-2xl">info@riadgold.com</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-500 uppercase text-xs font-bold mb-3 tracking-widest">Hours</p>
+                            <p class="text-2xl">Mon-Fri: 8AM - 10PM<br>Weekends: 9AM - 11PM</p>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-6 mt-16">
+                        <a href="#" class="text-3xl hover:text-gold transition-colors">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-3xl hover:text-gold transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-3xl hover:text-gold transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <form class="space-y-8">
+                        <div>
+                            <input type="text" placeholder="Name" class="w-full bg-transparent border-b-2 border-gray-700 py-5 focus:border-gold focus:outline-none transition-colors text-xl">
+                        </div>
+                        <div>
+                            <input type="email" placeholder="Email" class="w-full bg-transparent border-b-2 border-gray-700 py-5 focus:border-gold focus:outline-none transition-colors text-xl">
+                        </div>
+                        <div>
+                            <input type="tel" placeholder="Phone" class="w-full bg-transparent border-b-2 border-gray-700 py-5 focus:border-gold focus:outline-none transition-colors text-xl">
+                        </div>
+                        <div>
+                            <textarea placeholder="Message" rows="4" class="w-full bg-transparent border-b-2 border-gray-700 py-5 focus:border-gold focus:outline-none transition-colors text-xl resize-none"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary bg-white text-black hover:bg-gold hover:text-white">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-16 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-600 mb-6 md:mb-0">© 2025 Riad Gold. All rights reserved.</p>
+                <div class="flex space-x-10 text-sm">
+                    <a href="#" class="text-gray-600 hover:text-black transition-colors uppercase tracking-wider">Privacy</a>
+                    <a href="#" class="text-gray-600 hover:text-black transition-colors uppercase tracking-wider">Terms</a>
+                    <a href="#" class="text-gray-600 hover:text-black transition-colors uppercase tracking-wider">Cancellation</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
