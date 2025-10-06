@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements - Riad Gold Admin</title>
+    <link rel="stylesheet" href="../public/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Top Navigation -->
+    <nav class="bg-riad-dark text-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-xl font-bold text-riad-gold">Riad Gold Admin</span>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="ml-3 relative">
+                        <div class="flex items-center">
+                            <span class="mr-3 text-sm" id="username-display">Admin</span>
+                            <button id="logout-button" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex-grow flex">
+        <!-- Sidebar Navigation -->
+        <div class="bg-white w-64 shadow-md hidden md:block">
+            <div class="p-6">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="index.html" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded">
+                            <i class="fas fa-tachometer-alt mr-3"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="bookings.html" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded">
+                            <i class="fas fa-calendar-alt mr-3"></i>
+                            <span>Bookings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="announcements.html" class="flex items-center p-2 text-riad-gold bg-gray-100 rounded">
+                            <i class="fas fa-bullhorn mr-3"></i>
+                            <span>Announcements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="notifications.html" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded">
+                            <i class="fas fa-bell mr-3"></i>
+                            <span>Notifications</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded">
+                            <i class="fas fa-cog mr-3"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Mobile Sidebar Toggle -->
+        <div class="md:hidden p-4 bg-white w-full shadow-md">
+            <button id="mobile-menu-button" class="text-gray-700">
+                <i class="fas fa-bars"></i> Menu
+            </button>
+
+            <!-- Mobile Menu (hidden by default) -->
+            <div id="mobile-menu" class="hidden mt-2">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="index.html" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded">
+                            <i class="fas fa-tachometer-alt mr-3"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="bookings.html" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded">
+                            <i class="fas fa-calendar-alt mr-3"></i>
+                            <span>Bookings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="announcements.html" class="flex items-center p-2 text-riad-gold bg-gray-100 rounded">
+                            <i class="fas fa-bullhorn mr-3"></i>
+                            <span>Announcements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="notifications.html" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded">
+                            <i class="fas fa-bell mr-3"></i>
+                            <span>Notifications</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded">
+                            <i class="fas fa-cog mr-3"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-6 md:p-8 overflow-y-auto">
+            <h1 class="text-2xl font-bold mb-6">Announcements Management</h1>
+
+            <!-- Create Announcement Form -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-xl font-bold mb-4">Create New Announcement</h2>
+                <form id="announcement-form">
+                    <div class="mb-4">
+                        <label for="announcement-title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                        <input type="text" id="announcement-title" class="input" placeholder="Enter announcement title" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="announcement-content" class="block text-sm font-medium text-gray-700 mb-1">Content</label>
+                        <textarea id="announcement-content" class="input" rows="4" placeholder="Enter announcement content" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="announcement-type" class="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                        <select id="announcement-type" class="input">
+                            <option value="info">Information</option>
+                            <option value="warning">Warning</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="promotion">Promotion</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="announcement-expiry" class="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
+                        <input type="date" id="announcement-expiry" class="input">
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-bullhorn mr-2"></i> Publish Announcement
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Active Announcements -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-bold">Active Announcements</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Published</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expires</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="announcements-table">
+                            <!-- Announcements will be loaded here -->
+                            <tr class="text-center">
+                                <td colspan="5" class="px-6 py-4 text-sm text-gray-500">
+                                    <i class="fas fa-spinner fa-spin mr-2"></i> Loading announcements...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/announcements.js"></script>
+</body>
+</html>

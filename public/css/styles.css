@@ -1,0 +1,722 @@
+/* ==========================
+   Riad Gold - Admin Dashboard Styles
+   ========================== */
+
+/* Tailwind base override */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Brand Colors */
+:root {
+  --riad-gold: #d4af37;   /* Gold color */
+  --riad-dark: #1c1c1c;   /* Dark gray/black */
+  --riad-light: #f9f9f9;  /* Soft background */
+}
+
+/* Utility classes */
+.bg-riad-gold {
+  background-color: var(--riad-gold);
+}
+
+.text-riad-gold {
+  color: var(--riad-gold);
+}
+
+.bg-riad-dark {
+  background-color: var(--riad-dark);
+}
+
+.text-riad-dark {
+  color: var(--riad-dark);
+}
+
+/* Links */
+a {
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: var(--riad-gold);
+}
+
+/* Sidebar active link */
+.sidebar-active {
+  background-color: var(--riad-light);
+  color: var(--riad-gold) !important;
+  font-weight: 600;
+}
+
+/* Buttons */
+button {
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Analytics range buttons */
+.analytics-range-btn.active {
+  background-color: var(--riad-gold);
+  border-color: var(--riad-gold);
+  color: #fff;
+}
+
+/* Table styling */
+table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+table td {
+  font-size: 0.875rem;
+  color: #333;
+}
+
+table tr:hover td {
+  background-color: #fafafa;
+}
+
+/* Notifications list */
+#notifications-list li {
+  transition: background-color 0.2s ease-in-out;
+}
+
+#notifications-list li:hover {
+  background-color: #fefefe;
+}
+
+/* Mobile menu */
+#mobile-menu a {
+  font-weight: 500;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--riad-gold);
+  border-radius: 4px;
+}
+
+/* Dashboard cards */
+.shadow-md {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.shadow-md:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+/* ==========================
+   Riad Gold - Public Website Styles
+   ========================== */
+
+/* Tailwind base */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================
+   Brand Colors
+   ========================== */
+:root {
+  --riad-gold: #d4af37;   /* Gold */
+  --riad-dark: #1c1c1c;   /* Deep black/dark */
+  --riad-light: #f9f9f9;  /* Soft background */
+}
+
+/* Custom utility classes */
+.bg-riad-gold { background-color: var(--riad-gold); }
+.text-riad-gold { color: var(--riad-gold); }
+.bg-riad-dark { background-color: var(--riad-dark); }
+.text-riad-dark { color: var(--riad-dark); }
+.bg-riad-light { background-color: var(--riad-light); }
+
+/* ==========================
+   Global
+   ========================== */
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: var(--riad-gold);
+}
+
+/* ==========================
+   Buttons
+   ========================== */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  text-align: center;
+  transition: all 0.25s ease;
+}
+
+.btn-primary {
+  background-color: var(--riad-gold);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: #c19d2f; /* darker gold */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* ==========================
+   Cards
+   ========================== */
+.card {
+  background: #fff;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+/* ==========================
+   Forms / Inputs
+   ========================== */
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ddd;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--riad-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.25);
+  outline: none;
+}
+
+/* ==========================
+   Header / Navigation
+   ========================== */
+header a {
+  font-weight: 500;
+}
+
+#mobile-menu a {
+  padding: 0.5rem 0;
+  display: block;
+}
+
+/* ==========================
+   Hero Section
+   ========================== */
+section.relative h1 {
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+}
+
+section.relative p {
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* ==========================
+   Footer
+   ========================== */
+footer {
+  font-size: 0.875rem;
+}
+
+footer h3 {
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+}
+
+/* ==========================
+   Scrollbar Styling
+   ========================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--riad-gold);
+  border-radius: 4px;
+}
+/* === Riad Gold Custom Theme === */
+
+/* Colors */
+:root {
+  --riad-gold: #d4af37;
+  --riad-dark: #1e1e1e;
+  --riad-light: #f9f9f9;
+  --riad-gray: #e5e5e5;
+}
+
+/* Base */
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: var(--riad-light);
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: 700;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Cards */
+.card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--riad-gold);
+  color: #fff;
+  border: none;
+}
+.btn-primary:hover {
+  background-color: #c19e2c;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--riad-gold);
+  color: var(--riad-gold);
+}
+.btn-outline:hover {
+  background-color: var(--riad-gold);
+  color: #fff;
+}
+
+/* Inputs */
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--riad-gray);
+  background: #fff;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+.input:focus {
+  border-color: var(--riad-gold);
+  box-shadow: 0 0 0 2px rgba(212,175,55,0.3);
+  outline: none;
+}
+
+/* Navbar */
+header {
+  background: var(--riad-dark);
+}
+header a {
+  transition: color 0.2s ease;
+}
+.text-riad-gold {
+  color: var(--riad-gold);
+}
+.bg-riad-dark {
+  background-color: var(--riad-dark);
+}
+.bg-riad-light {
+  background-color: var(--riad-light);
+}
+
+/* Footer */
+footer {
+  background: var(--riad-dark);
+  color: #ccc;
+}
+footer a {
+  color: #ccc;
+}
+footer a:hover {
+  color: var(--riad-gold);
+}
+
+/* Mobile Menu */
+#mobile-menu {
+  transition: max-height 0.3s ease;
+  overflow: hidden;
+}
+
+/* Utility classes */
+.hidden { display: none; }
+.text-center { text-align: center; }
+.font-bold { font-weight: 700; }
+/* Admin Dashboard Styles */
+.analytics-range-btn.active {
+    background-color: #B8860B;
+    color: white;
+}
+
+/* Chart containers */
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+
+/* Table styles */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-table th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+/* Sidebar styles */
+.sidebar-link.active {
+    background-color: #edf2f7;
+    color: #B8860B;
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-pending {
+    background-color: #fef3cd;
+    color: #8a6d3b;
+}
+
+.status-confirmed {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .admin-table {
+        font-size: 0.875rem;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 8px 10px;
+    }
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Color Palette */
+:root {
+    --riad-gold: #B8860B;
+    --riad-dark: #1a202c;
+    --riad-light: #f7fafc;
+}
+
+/* Custom styles */
+@layer components {
+    /* Enhanced Buttons */
+    .btn-gold {
+        @apply bg-riad-gold text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-amber-700 hover:shadow-lg hover:scale-105 focus:outline-none focus:ring-2 focus:ring-riad-gold focus:ring-opacity-50;
+    }
+
+    .btn-gold-lg {
+        @apply bg-riad-gold text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:bg-amber-700 hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-riad-gold focus:ring-opacity-50;
+    }
+
+    .btn-outline-white {
+        @apply border-2 border-white text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-white hover:text-riad-dark hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50;
+    }
+
+    /* Navigation */
+    .nav-link {
+        @apply text-riad-dark font-medium transition-all duration-300 hover:text-riad-gold hover:scale-105 relative;
+    }
+
+    .nav-link.active {
+        @apply text-riad-gold font-semibold;
+    }
+
+    .nav-link.active::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-full h-0.5 bg-riad-gold transform scale-x-100 transition-transform duration-300;
+    }
+
+    .nav-link::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-full h-0.5 bg-riad-gold transform scale-x-0 transition-transform duration-300;
+    }
+
+    .nav-link:hover::after {
+        @apply scale-x-100;
+    }
+
+    .mobile-nav-link {
+        @apply flex items-center text-riad-dark font-medium py-3 px-4 rounded-lg transition-all duration-300 hover:bg-riad-gold hover:text-white hover:scale-105;
+    }
+
+    .mobile-nav-link.active {
+        @apply bg-riad-gold text-white;
+    }
+
+    /* Cards */
+    .feature-card {
+        @apply bg-white p-8 rounded-2xl shadow-lg border border-gray-100 transition-all duration-500 hover:shadow-2xl hover:scale-105 hover:border-riad-gold/20 text-center;
+    }
+
+    .feature-icon {
+        @apply w-16 h-16 rounded-2xl flex items-center justify-center text-2xl mb-6 mx-auto transition-all duration-300;
+    }
+
+    .feature-card:hover .feature-icon {
+        @apply scale-110;
+    }
+
+    .pricing-card {
+        @apply bg-white p-8 rounded-2xl shadow-lg border border-gray-200 transition-all duration-500 hover:shadow-xl relative;
+    }
+
+    .pricing-card.featured {
+        @apply border-2 border-riad-gold transform scale-105;
+    }
+
+    .pricing-badge {
+        @apply absolute -top-3 left-1/2 transform -translate-x-1/2 bg-riad-gold text-white px-4 py-1 rounded-full text-sm font-semibold;
+    }
+
+    .pricing-header {
+        @apply text-center mb-8;
+    }
+
+    .price {
+        @apply flex items-baseline justify-center mt-4;
+    }
+
+    .currency {
+        @apply text-2xl text-riad-gold font-bold;
+    }
+
+    .amount {
+        @apply text-5xl text-riad-dark font-bold mx-1;
+    }
+
+    .period {
+        @apply text-gray-500 text-lg;
+    }
+
+    .pricing-features {
+        @apply space-y-4 mb-8;
+    }
+
+    .pricing-features li {
+        @apply flex items-center text-gray-600;
+    }
+
+    .pricing-btn {
+        @apply w-full bg-riad-gold text-white py-4 rounded-lg font-semibold text-center transition-all duration-300 hover:bg-amber-700 hover:shadow-lg block;
+    }
+
+    .pricing-btn.featured {
+        @apply bg-riad-dark hover:bg-gray-800;
+    }
+
+    /* Forms */
+    .quick-search-input {
+        @apply w-full px-4 py-3 bg-white/10 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-riad-gold focus:border-transparent backdrop-blur-sm;
+    }
+
+    .contact-input {
+        @apply w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-riad-gold focus:border-transparent transition-all duration-300;
+    }
+
+    .newsletter-input {
+        @apply w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-riad-gold focus:border-transparent;
+    }
+
+    /* Facility Items */
+    .facility-item {
+        @apply flex items-start space-x-4 p-4 rounded-xl transition-all duration-300 hover:bg-white hover:shadow-lg;
+    }
+
+    .facility-item-icon {
+        @apply w-12 h-12 bg-riad-gold text-white rounded-xl flex items-center justify-center text-lg flex-shrink-0 transition-all duration-300;
+    }
+
+    .facility-item:hover .facility-item-icon {
+        @apply scale-110;
+    }
+
+    /* Contact Cards */
+    .contact-card {
+        @apply flex items-start space-x-4 p-6 bg-gray-50 rounded-xl mb-4 transition-all duration-300 hover:bg-white hover:shadow-lg;
+    }
+
+    .contact-icon {
+        @apply w-12 h-12 bg-riad-gold text-white rounded-xl flex items-center justify-center text-lg flex-shrink-0;
+    }
+
+    /* Stats */
+    .stat-card {
+        @apply text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100 transition-all duration-300 hover:shadow-xl hover:scale-105;
+    }
+
+    .stat-number {
+        @apply text-3xl font-bold text-riad-gold mb-2;
+    }
+
+    .stat-label {
+        @apply text-gray-600 font-medium;
+    }
+
+    /* Images */
+    .facility-image {
+        @apply overflow-hidden rounded-2xl shadow-2xl transition-all duration-500 hover:scale-105;
+    }
+
+    .facility-image img {
+        @apply w-full h-64 object-cover transition-transform duration-700 hover:scale-110;
+    }
+
+    .about-image {
+        @apply overflow-hidden rounded-2xl shadow-2xl;
+    }
+
+    .about-image img {
+        @apply w-full h-96 object-cover;
+    }
+
+    /* Footer */
+    .footer-link {
+        @apply text-gray-400 transition-all duration-300 hover:text-riad-gold hover:pl-2 block;
+    }
+
+    .social-icon {
+        @apply w-10 h-10 bg-gray-800 text-gray-400 rounded-lg flex items-center justify-center transition-all duration-300 hover:bg-riad-gold hover:text-white hover:scale-110;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease-out;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--riad-gold);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a67c00;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus styles */
+button:focus,
+a:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid var(--riad-gold);
+    outline-offset: 2px;
+}
+
+/* Loading animation */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

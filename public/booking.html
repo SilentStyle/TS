@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Match - Riad Gold</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: clamp(1.75rem, 4vw, 3rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .time-slot {
+            border: 2px solid #000;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+
+        .time-slot.available:hover {
+            background: #000;
+            color: white;
+        }
+
+        .time-slot.selected {
+            background: #B8860B;
+            color: white;
+            border-color: #B8860B;
+        }
+
+        .time-slot.booked {
+            background: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+            border-color: #ddd;
+        }
+
+        .btn-primary {
+            background: #000;
+            color: white;
+            padding: 18px 50px;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: #B8860B;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #000;
+            padding: 18px 50px;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border: 2px solid #000;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background: #000;
+            color: white;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid #ddd;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #B8860B;
+        }
+
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #ddd;
+            font-weight: 900;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .step-indicator.active {
+            background: #B8860B;
+            border-color: #B8860B;
+            color: white;
+        }
+
+        .step-indicator.completed {
+            background: #000;
+            border-color: #000;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .time-slot {
+                padding: 16px 12px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 bg-white/98 backdrop-blur-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-black tracking-tight">RIAD GOLD</a>
+
+            <nav class="hidden md:flex items-center space-x-12">
+                <a href="index.html" class="text-sm font-semibold uppercase tracking-wider hover:text-gray-600 transition-colors">Home</a>
+                <a href="index.html#activities" class="text-sm font-semibold uppercase tracking-wider hover:text-gray-600 transition-colors">Activities</a>
+                <a href="index.html#contact" class="text-sm font-semibold uppercase tracking-wider hover:text-gray-600 transition-colors">Contact</a>
+            </nav>
+
+            <button class="md:hidden text-2xl" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-6 py-6 space-y-6">
+                <a href="index.html" class="block text-sm font-semibold uppercase tracking-wider">Home</a>
+                <a href="index.html#activities" class="block text-sm font-semibold uppercase tracking-wider">Activities</a>
+                <a href="index.html#contact" class="block text-sm font-semibold uppercase tracking-wider">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Steps -->
+    <section class="pt-32 pb-12 bg-gray-50 border-b border-gray-200">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <div class="flex flex-col items-center flex-1">
+                    <div class="step-indicator completed" id="step-1">1</div>
+                    <p class="mt-3 text-xs font-bold uppercase tracking-wider">Select Time</p>
+                </div>
+                <div class="h-0.5 bg-gray-300 flex-1 mx-4"></div>
+                <div class="flex flex-col items-center flex-1">
+                    <div class="step-indicator" id="step-2">2</div>
+                    <p class="mt-3 text-xs font-bold uppercase tracking-wider">Your Details</p>
+                </div>
+                <div class="h-0.5 bg-gray-300 flex-1 mx-4"></div>
+                <div class="flex flex-col items-center flex-1">
+                    <div class="step-indicator" id="step-3">3</div>
+                    <p class="mt-3 text-xs font-bold uppercase tracking-wider">Confirm</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Content -->
+    <section class="py-20 bg-white min-h-screen">
+        <div class="max-w-6xl mx-auto px-6">
+            <h1 class="page-title mb-4">Book Your<br>Match</h1>
+            <p class="text-xl text-gray-600 mb-16 max-w-2xl">Select your preferred date and time</p>
+
+            <!-- Step 1: Date & Time Selection -->
+            <div id="step-content-1" class="step-content">
+                <div class="mb-12">
+                    <h2 class="section-title mb-8">Select Date</h2>
+                    <input type="date" id="booking-date" class="input-field max-w-md">
+                </div>
+
+                <div class="mb-12">
+                    <h2 class="section-title mb-8">Available Times</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3" id="time-slots">
+                        <!-- Time slots will be generated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center pt-8 border-t-2 border-black">
+                    <div>
+                        <span class="text-sm uppercase tracking-wider text-gray-600">Selected:</span>
+                        <span id="selected-count" class="ml-3 font-black text-2xl">0</span>
+                    </div>
+                    <button id="btn-to-details" class="btn-primary" disabled>
+                        Continue
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Customer Details -->
+            <div id="step-content-2" class="step-content hidden">
+                <h2 class="section-title mb-8">Your Information</h2>
+
+                <form id="booking-form" class="space-y-6 max-w-2xl">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block mb-3 text-sm font-bold uppercase tracking-wider">Name *</label>
+                            <input type="text" id="name" class="input-field" required>
+                        </div>
+                        <div>
+                            <label class="block mb-3 text-sm font-bold uppercase tracking-wider">Phone *</label>
+                            <input type="tel" id="phone" class="input-field" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block mb-3 text-sm font-bold uppercase tracking-wider">Email *</label>
+                        <input type="email" id="email" class="input-field" required>
+                    </div>
+                    <div>
+                        <label class="block mb-3 text-sm font-bold uppercase tracking-wider">Notes (Optional)</label>
+                        <textarea id="notes" rows="4" class="input-field resize-none"></textarea>
+                    </div>
+
+                    <div class="flex gap-4 pt-8 border-t-2 border-black">
+                        <button type="button" id="btn-back-to-slots" class="btn-secondary">
+                            Back
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            Complete Booking
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Step 3: Confirmation (handled by redirect) -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-16 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm text-gray-600 mb-6 md:mb-0">© 2025 Riad Gold. All rights reserved.</p>
+                <div class="flex space-x-10 text-sm">
+                    <a href="#" class="text-gray-600 hover:text-black transition-colors uppercase tracking-wider">Privacy</a>
+                    <a href="#" class="text-gray-600 hover:text-black transition-colors uppercase tracking-wider">Terms</a>
+                    <a href="#" class="text-gray-600 hover:text-black transition-colors uppercase tracking-wider">Cancellation</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let selectedSlots = [];
+        const availableSlots = {};
+
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Initialize date
+        const bookingDateInput = document.getElementById('booking-date');
+        const today = new Date();
+        bookingDateInput.value = today.toISOString().split('T')[0];
+        bookingDateInput.min = today.toISOString().split('T')[0];
+
+        // Generate time slots
+        function generateTimeSlots(date) {
+            const timeSlotsContainer = document.getElementById('time-slots');
+            timeSlotsContainer.innerHTML = '';
+
+            for (let hour = 8; hour < 23; hour++) {
+                const slotId = `${date}-${hour}`;
+                const isBooked = Math.random() > 0.7; // 30% chance of being booked
+
+                const slot = document.createElement('div');
+                slot.className = `time-slot ${isBooked ? 'booked' : 'available'}`;
+                slot.dataset.slotId = slotId;
+                slot.innerHTML = `
+                    <div class="text-lg font-black mb-1">${hour}:00</div>
+                    <div class="text-xs">${isBooked ? 'Booked' : 'Available'}</div>
+                `;
+
+                if (!isBooked) {
+                    slot.addEventListener('click', () => toggleSlot(slotId));
+                }
+
+                timeSlotsContainer.appendChild(slot);
+                availableSlots[slotId] = { id: slotId, booked: isBooked };
+            }
+        }
+
+        // Toggle slot selection
+        function toggleSlot(slotId) {
+            const index = selectedSlots.indexOf(slotId);
+            const slotElement = document.querySelector(`[data-slot-id="${slotId}"]`);
+
+            if (index === -1) {
+                selectedSlots.push(slotId);
+                slotElement.classList.add('selected');
+            } else {
+                selectedSlots.splice(index, 1);
+                slotElement.classList.remove('selected');
+            }
+
+            updateSelectedCount();
+        }
+
+        // Update selected count
+        function updateSelectedCount() {
+            document.getElementById('selected-count').textContent = selectedSlots.length;
+            document.getElementById('btn-to-details').disabled = selectedSlots.length === 0;
+        }
+
+        // Date change
+        bookingDateInput.addEventListener('change', function() {
+            selectedSlots = [];
+            updateSelectedCount();
+            generateTimeSlots(this.value);
+        });
+
+        // Step navigation
+        document.getElementById('btn-to-details').addEventListener('click', () => {
+            if (selectedSlots.length > 0) {
+                document.getElementById('step-content-1').classList.add('hidden');
+                document.getElementById('step-content-2').classList.remove('hidden');
+                document.getElementById('step-1').classList.add('completed');
+                document.getElementById('step-2').classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        document.getElementById('btn-back-to-slots').addEventListener('click', () => {
+            document.getElementById('step-content-2').classList.add('hidden');
+            document.getElementById('step-content-1').classList.remove('hidden');
+            document.getElementById('step-2').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Form submission
+        document.getElementById('booking-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const bookingData = {
+                name: document.getElementById('name').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                notes: document.getElementById('notes').value,
+                date: bookingDateInput.value,
+                slots: selectedSlots
+            };
+
+            // Show loading
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+            submitBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                const bookingId = 'B' + Math.floor(1000 + Math.random() * 9000);
+                window.location.href = `booking-status.html?id=${bookingId}`;
+            }, 1500);
+        });
+
+        // Initialize
+        generateTimeSlots(bookingDateInput.value);
+    </script>
+</body>
+</html>

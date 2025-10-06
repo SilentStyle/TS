@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Riad Gold Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; background: #fafafa; }
+        .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: #fff; border-right: 1px solid #e5e5e5; z-index: 50; transition: transform 0.3s; }
+        .sidebar-logo { padding: 32px 24px; border-bottom: 1px solid #e5e5e5; font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+        .sidebar-nav { padding: 16px 12px; }
+        .nav-item { display: flex; align-items: center; padding: 14px 16px; color: #666; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s; border-radius: 8px; margin-bottom: 4px; border-left: 3px solid transparent; }
+        .nav-item:hover { background: #fafafa; color: #000; }
+        .nav-item.active { background: #fafafa; color: #000; border-left-color: #B8860B; font-weight: 600; }
+        .nav-item i { width: 20px; margin-right: 12px; font-size: 16px; }
+        .main-content { margin-left: 260px; min-height: 100vh; }
+        .top-bar { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+        .page-title { font-size: 32px; font-weight: 900; letter-spacing: -0.8px; color: #000; }
+        .user-menu { display: flex; align-items: center; gap: 16px; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: #B8860B; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 16px; }
+        .logout-btn { padding: 10px 20px; background: #000; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .logout-btn:hover { background: #333; }
+        .content-area { padding: 40px; }
+        .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 32px; margin-bottom: 24px; }
+        .card-title { font-size: 24px; font-weight: 800; color: #000; letter-spacing: -0.5px; margin-bottom: 24px; }
+        .input { width: 100%; padding: 12px 16px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px; transition: all 0.2s; }
+        .input:focus { outline: none; border-color: #B8860B; }
+        .btn { padding: 11px 24px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; width: 100%; }
+        .btn-primary { background: #B8860B; color: #fff; }
+        .btn-primary:hover { background: #9a7009; }
+        .btn-secondary { background: #f5f5f5; color: #000; }
+        .btn-secondary:hover { background: #e5e5e5; }
+        label { display: block; font-size: 11px; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+        .form-group { margin-bottom: 20px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .grid-lg { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .toggle-switch { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #f5f5f5; }
+        .toggle-switch:last-child { border-bottom: none; }
+        .toggle-label { flex: 1; }
+        .toggle-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .toggle-desc { font-size: 12px; color: #666; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #e5e5e5; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #B8860B; }
+        input:checked + .slider:before { transform: translateX(20px); }
+        .info-row { display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid #f5f5f5; }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { font-size: 14px; color: #666; }
+        .info-value { font-size: 14px; font-weight: 600; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #333; }
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 40; }
+        .overlay.show { display: block; }
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .mobile-menu-btn { display: block; }
+            .content-area { padding: 24px; }
+            .page-title { font-size: 24px; }
+            .top-bar { padding: 16px 24px; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .grid-lg { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">RIAD GOLD</div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Dashboard</span></a>
+            <a href="bookings.html" class="nav-item"><i class="fas fa-calendar-check"></i><span>Bookings</span></a>
+            <a href="announcements.html" class="nav-item"><i class="fas fa-bullhorn"></i><span>Announcements</span></a>
+            <a href="notifications.html" class="nav-item"><i class="fas fa-bell"></i><span>Notifications</span></a>
+            <a href="settings.html" class="nav-item active"><i class="fas fa-cog"></i><span>Settings</span></a>
+        </nav>
+    </aside>
+
+    <div class="overlay" id="overlay"></div>
+
+    <main class="main-content">
+        <div class="top-bar">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                <h1 class="page-title">Settings</h1>
+            </div>
+            <div class="user-menu">
+                <div class="user-avatar">A</div>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="grid-lg">
+                <!-- Business Hours -->
+                <div class="card">
+                    <h2 class="card-title">Business Hours</h2>
+                    <form id="business-hours-form">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Opening Time</label>
+                                <input type="time" class="input" value="08:00">
+                            </div>
+                            <div class="form-group">
+                                <label>Closing Time</label>
+                                <input type="time" class="input" value="22:00">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Hours</button>
+                    </form>
+                </div>
+
+                <!-- Booking Settings -->
+                <div class="card">
+                    <h2 class="card-title">Booking Settings</h2>
+                    <form id="booking-settings-form">
+                        <div class="form-group">
+                            <label>Slot Duration (minutes)</label>
+                            <input type="number" class="input" value="60" min="30" step="30">
+                        </div>
+                        <div class="form-group">
+                            <label>Max Slots per Booking</label>
+                            <input type="number" class="input" value="3" min="1" max="10">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Settings</button>
+                    </form>
+                </div>
+
+                <!-- Notification Settings -->
+                <div class="card">
+                    <h2 class="card-title">Notification Settings</h2>
+                    <form id="notification-settings-form">
+                        <div class="toggle-switch">
+                            <div class="toggle-label">
+                                <div class="toggle-title">Email Notifications</div>
+                                <div class="toggle-desc">Send email notifications for new bookings</div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-switch">
+                            <div class="toggle-label">
+                                <div class="toggle-title">SMS Notifications</div>
+                                <div class="toggle-desc">Send SMS notifications for urgent matters</div>
+                            </div>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 24px;">Save Notification Settings</button>
+                    </form>
+                </div>
+
+                <!-- System Information -->
+                <div class="card">
+                    <h2 class="card-title">System Information</h2>
+                    <div class="info-row">
+                        <span class="info-label">System Version</span>
+                        <span class="info-value">v1.0.0</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Last Backup</span>
+                        <span class="info-value">2023-06-15 02:00</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Active Bookings</span>
+                        <span class="info-value">24</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Storage Used</span>
+                        <span class="info-value">156 MB / 1 GB</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px;">
+                        <button class="btn btn-secondary">Backup Now</button>
+                        <button class="btn btn-secondary">System Logs</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('show');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+        });
+
+        document.getElementById('business-hours-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Business hours updated successfully!');
+        });
+
+        document.getElementById('booking-settings-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Booking settings updated successfully!');
+        });
+
+        document.getElementById('notification-settings-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Notification settings updated successfully!');
+        });
+    </script>
+</body>
+</html>

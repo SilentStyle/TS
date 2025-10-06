@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings - Riad Gold Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; -webkit-font-smoothing: antialiased; background: #fafafa; }
+        .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100vh; background: #fff; border-right: 1px solid #e5e5e5; z-index: 50; transition: transform 0.3s; }
+        .sidebar-logo { padding: 32px 24px; border-bottom: 1px solid #e5e5e5; font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+        .sidebar-nav { padding: 16px 12px; }
+        .nav-item { display: flex; align-items: center; padding: 14px 16px; color: #666; text-decoration: none; font-size: 14px; font-weight: 500; transition: all 0.2s; border-radius: 8px; margin-bottom: 4px; border-left: 3px solid transparent; }
+        .nav-item:hover { background: #fafafa; color: #000; }
+        .nav-item.active { background: #fafafa; color: #000; border-left-color: #B8860B; font-weight: 600; }
+        .nav-item i { width: 20px; margin-right: 12px; font-size: 16px; }
+        .main-content { margin-left: 260px; min-height: 100vh; }
+        .top-bar { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+        .page-title { font-size: 32px; font-weight: 900; letter-spacing: -0.8px; color: #000; }
+        .user-menu { display: flex; align-items: center; gap: 16px; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: #B8860B; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 16px; }
+        .logout-btn { padding: 10px 20px; background: #000; color: #fff; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .logout-btn:hover { background: #333; }
+        .content-area { padding: 40px; }
+        .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 32px; margin-bottom: 24px; }
+        .card-header { display: flex; justify-between; align-items: center; margin-bottom: 24px; }
+        .card-title { font-size: 24px; font-weight: 800; color: #000; letter-spacing: -0.5px; }
+        .input { width: 100%; padding: 12px 16px; border: 1px solid #e5e5e5; border-radius: 8px; font-size: 14px; transition: all 0.2s; }
+        .input:focus { outline: none; border-color: #B8860B; }
+        .btn { padding: 11px 24px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; }
+        .btn-primary { background: #B8860B; color: #fff; }
+        .btn-primary:hover { background: #9a7009; }
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; }
+        thead th { background: #fafafa; padding: 16px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #666; border-bottom: 1px solid #e5e5e5; }
+        tbody td { padding: 20px 16px; border-bottom: 1px solid #f5f5f5; font-size: 14px; color: #333; }
+        tbody tr:hover { background: #fafafa; }
+        .badge { display: inline-block; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.3px; border: 1px solid; }
+        .badge-pending { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+        .badge-confirmed { background: #d1fae5; color: #065f46; border-color: #a7f3d0; }
+        .badge-cancelled { background: #fee2e2; color: #991b1b; border-color: #fecaca; }
+        .action-btn { background: none; border: none; color: #666; cursor: pointer; font-size: 13px; font-weight: 600; padding: 6px 12px; transition: all 0.2s; }
+        .action-btn:hover { color: #000; }
+        .action-btn.danger:hover { color: #ef4444; }
+        .mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; cursor: pointer; color: #333; }
+        .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 40; }
+        .overlay.show { display: block; }
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .mobile-menu-btn { display: block; }
+            .content-area { padding: 24px; }
+            .page-title { font-size: 24px; }
+            .top-bar { padding: 16px 24px; }
+        }
+        label { display: block; font-size: 11px; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">RIAD GOLD</div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item"><i class="fas fa-chart-line"></i><span>Dashboard</span></a>
+            <a href="bookings.html" class="nav-item active"><i class="fas fa-calendar-check"></i><span>Bookings</span></a>
+            <a href="announcements.html" class="nav-item"><i class="fas fa-bullhorn"></i><span>Announcements</span></a>
+            <a href="notifications.html" class="nav-item"><i class="fas fa-bell"></i><span>Notifications</span></a>
+            <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i><span>Settings</span></a>
+        </nav>
+    </aside>
+
+    <div class="overlay" id="overlay"></div>
+
+    <main class="main-content">
+        <div class="top-bar">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <button class="mobile-menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+                <h1 class="page-title">Bookings</h1>
+            </div>
+            <div class="user-menu">
+                <div class="user-avatar">A</div>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Filters</h2>
+                </div>
+                <div class="grid-4">
+                    <div>
+                        <label>Status</label>
+                        <select class="input" id="status-filter">
+                            <option value="all">All Statuses</option>
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>From Date</label>
+                        <input type="date" class="input" id="date-from">
+                    </div>
+                    <div>
+                        <label>To Date</label>
+                        <input type="date" class="input" id="date-to">
+                    </div>
+                    <div style="display: flex; align-items: end;">
+                        <button class="btn btn-primary" style="width: 100%;" id="apply-filters">Apply Filters</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="padding: 0; overflow: hidden;">
+                <div style="padding: 32px; border-bottom: 1px solid #e5e5e5;">
+                    <h2 class="card-title">All Bookings</h2>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Contact</th>
+                                <th>Date & Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookings-table">
+                            <tr><td colspan="6" style="text-align: center; color: #666;"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('show');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+        });
+
+        function loadBookings() {
+            const table = document.getElementById('bookings-table');
+            const statusFilter = document.getElementById('status-filter').value;
+
+            setTimeout(() => {
+                let bookings = [
+                    { id: 'B1001', name: 'John Smith', email: 'john@example.com', phone: '+1 234 567 8900', date: '2023-06-20', time: '17:00', status: 'pending' },
+                    { id: 'B1002', name: 'Maria Garcia', email: 'maria@example.com', phone: '+1 234 567 8901', date: '2023-06-21', time: '18:00', status: 'pending' },
+                    { id: 'B1003', name: 'Ahmed Khan', email: 'ahmed@example.com', phone: '+1 234 567 8902', date: '2023-06-22', time: '19:00', status: 'confirmed' },
+                    { id: 'B1004', name: 'Sarah Johnson', email: 'sarah@example.com', phone: '+1 234 567 8903', date: '2023-06-23', time: '20:00', status: 'confirmed' },
+                    { id: 'B1005', name: 'Mike Brown', email: 'mike@example.com', phone: '+1 234 567 8904', date: '2023-06-24', time: '15:00', status: 'cancelled' },
+                ];
+
+                if (statusFilter !== 'all') {
+                    bookings = bookings.filter(b => b.status === statusFilter);
+                }
+
+                table.innerHTML = bookings.map(b => `
+                    <tr>
+                        <td style="font-weight: 600;">${b.id}</td>
+                        <td>${b.name}</td>
+                        <td><div>${b.email}</div><div style="font-size: 12px; color: #999; margin-top: 4px;">${b.phone}</div></td>
+                        <td>${b.date}<br>${b.time}</td>
+                        <td><span class="badge badge-${b.status}">${b.status.charAt(0).toUpperCase() + b.status.slice(1)}</span></td>
+                        <td>
+                            ${b.status === 'pending' ? `<button class="action-btn" onclick="alert('Confirmed ${b.id}')">Confirm</button>` : ''}
+                            ${b.status !== 'cancelled' ? `<button class="action-btn danger" onclick="alert('Cancelled ${b.id}')">Cancel</button>` : ''}
+                            <button class="action-btn" onclick="alert('Viewing ${b.id}')">View</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }, 500);
+        }
+
+        document.getElementById('apply-filters').addEventListener('click', loadBookings);
+        loadBookings();
+    </script>
+</body>
+</html>

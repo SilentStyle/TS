@@ -1,10 +1,21 @@
 {
-  "name": "${PROJECT_NAME}",
+  "name": "riad-gold-booking",
   "version": "1.0.0",
-  "description": "",
+  "description": "Booking system for Riad Gold soccer matches",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i ./src/css/input.css -o ./public/css/styles.css --minify",
+    "watch:css": "tailwindcss -i ./src/css/input.css -o ./public/css/styles.css --watch",
+    "dev": "npm run watch:css"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "chart.js": "^4.3.0",
+    "tailwindcss": "^3.3.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24"
+  }
 }
